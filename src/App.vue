@@ -1,22 +1,39 @@
 <template>
-  <div @click="increase">
-    {{ count }}
-  </div>
+  <h1 @click="increase">
+    {{ count }} / {{ doubleCount }}
+  </h1>
+  <h1 @click="changeMessage">
+    {{ message }} / {{ reversedMessage }}
+  </h1>
 </template>
 
 <script>
-import { ref } from 'vue'
-
 export default {
-  setup() { //여기서 정의한 변수는 반응성을 가지지 않음
-    let count = ref(0) // 반응성을 가진 객체 데이터로 만들어줌
-    function increase() {
-      count.value += 1 //객체가 되었기 때문에 value로 접근
-    }
-
+  data() {
     return {
-      count,
-      increase
+      count : 0,
+      message: 'Hello world!'
+    }
+  },
+  computed: {
+    doubleCount(){
+      return this.count * 2
+    },
+    reversedMessage() {
+      this.message.split('').reverse().join('')
+    }
+  },
+  watch: {
+    message(newValue){
+      console.log(newValue)
+    }
+  }
+  methods: {
+    increase() {
+      this.count += 1
+    },
+    changeMessage() {
+      this.message = 'Good?!'
     }
   }
 }
